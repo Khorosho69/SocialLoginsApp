@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SocialLoginsApp</string>
+    <string name="google_login_button_text">Google LogIn</string>
+    <string name="facebook_login_button_text">Facebook LogIn</string>
+    <string name="twitter_login_button_text">Twitter LogIn</string>
+    <string name="instagram_login_button_text">Instagram LogIn</string>
+</resources>

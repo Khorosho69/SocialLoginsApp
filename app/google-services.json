@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "519483395546",
+    "project_id": "loginapp-f8f16"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519483395546:android:a6c39e259cefec28",
+        "android_client_info": {
+          "package_name": "com.antont.socialloginsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "519483395546-rh924tbafhr7e2fpmafe27crrg8ecqtk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.antont.socialloginsapp",
+            "certificate_hash": "640cdcd18b4ae5f21af21e15653cc0464ffc1d8a"
+          }
+        },
+        {
+          "client_id": "519483395546-od1jhjl78216u2lp347snff81dbptd0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8Rf-B5D4gIPKYu4lMeT-6j_gNfgVxIFA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

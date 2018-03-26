@@ -7,4 +7,5 @@
 
     <string name="facebook_app_id">198535380752886</string>
     <string name="fb_login_protocol_scheme">fb198535380752886</string>
+    <string name="logout_button_text">Log out</string>
 </resources>

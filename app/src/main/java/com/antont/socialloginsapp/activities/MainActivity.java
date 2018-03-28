@@ -1,48 +1,78 @@
 package com.antont.socialloginsapp.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.antont.socialloginsapp.R;
 import com.antont.socialloginsapp.models.UserData;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
+import com.antont.socialloginsapp.utils.Utils;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
-    public static final String ARG_USER_ID = "ARG_USER_ID";
-    public static final String ARG_USER_NAME = "ARG_USER_NAME";
-    public static final String ARG_USER_EMAIL = "ARG_USER_EMAIL";
-    public static final String ARG_USER_PICT_URL = "ARG_USER_PICT_URL";
+
+    private Utils mUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UserData userData = getUserDataFromIntent(getIntent());
+        mUtils = new Utils(PreferenceManager.getDefaultSharedPreferences(this));
+        UserData userData = mUtils.getUserDataFromIntent(getIntent());
 
+        Button logoutButton = findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener((View view) -> logOut());
         initItems(userData);
     }
 
-    private UserData getUserDataFromIntent(Intent intent) {
-        String userId = intent.getStringExtra(ARG_USER_ID);
-        String userName = intent.getStringExtra(ARG_USER_NAME);
-        String userEmail = intent.getStringExtra(ARG_USER_EMAIL);
-        String userPictUrl = intent.getStringExtra(ARG_USER_PICT_URL);
+    private void logOut() {
+        mUtils.removeUserDataFromSharedPreferences();
 
-        return new UserData(userId, userName, userEmail, userPictUrl);
+        signOutFromGoogle();
+        signOutFromFacebook();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void signOutFromGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        GoogleSignInClient client = GoogleSignIn.getClient(this, gso);
+
+        client.signOut();
+        client.revokeAccess();
+    }
+
+    private void signOutFromFacebook() {
+        LoginManager.getInstance().logOut();
     }
 
     private void initItems(UserData data) {
-        ImageView userPict = findViewById(R.id.user_picture_image);
+        ImageView userPictImageView = findViewById(R.id.user_picture_image);
+
         Picasso.get()
                 .load(data.getUserImageUrl())
                 .placeholder(R.drawable.ic_portrait_black_24dp)
-                .into( userPict);
+                .into(userPictImageView);
 
         TextView userNameTextView = findViewById(R.id.user_name_text_view);
         userNameTextView.setText(data.getUserName());
@@ -50,5 +80,4 @@ public class MainActivity extends AppCompatActivity {
         TextView userEmailTextView = findViewById(R.id.email_text_view);
         userEmailTextView.setText(data.getUserEmail());
     }
-
 }
